@@ -1,0 +1,153 @@
+import * as React from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  TextField,
+  Typography,
+  Alert,
+  Paper,
+} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useAuth } from "../hooks/useAuth";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Inter, Roboto, Arial",
+  },
+});
+
+export default function Login() {
+  const [alert, setAlert] = React.useState({ st: false, msg: "" });
+  const navigate = useNavigate();
+  const { login, user } = useAuth();
+
+  React.useEffect(() => {
+    if (user) navigate("/");
+  }, [user, navigate]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const data = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    try {
+      const res = await axios.post(
+        "https://zerodha-clone-backend-8nlf.onrender.com/user/login",
+        data,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      await login(res.data.token);
+    } catch (error) {
+      setAlert({
+        st: true,
+        msg:
+          error.response?.data?.error ||
+          "Invalid credentials or network error",
+      });
+    }
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container
+        maxWidth="sm"
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            width: "100%",
+            p: 4,
+            borderRadius: 2,
+            textAlign: "center",
+          }}
+        >
+          {/* Zerodha Logo */}
+          <Box mb={2}>
+            <img
+              src="https://kite.zerodha.com/static/images/kite-logo.svg"
+              alt="Zerodha Kite"
+              style={{ height: 40 }}
+            />
+          </Box>
+
+          <Typography variant="h6" fontWeight={500} mb={2}>
+            Login to Kite
+          </Typography>
+
+          {alert.st && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {alert.msg}
+            </Alert>
+          )}
+
+          <Box component="form" onSubmit={handleSubmit}>
+            <TextField
+              fullWidth
+              required
+              name="email"
+              placeholder="User ID or Email"
+              variant="outlined"
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              fullWidth
+              required
+              name="password"
+              type="password"
+              placeholder="Password"
+              variant="outlined"
+              sx={{ mb: 3 }}
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              sx={{
+                backgroundColor: "#ff5722",
+                color: "#fff",
+                py: 1.2,
+                fontSize: "1rem",
+                textTransform: "none",
+                "&:hover": {
+                  backgroundColor: "#e64a19",
+                },
+              }}
+            >
+              Login
+            </Button>
+          </Box>
+
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            mt={3}
+          >
+            Don&apos;t have an account?{" "}
+            <Link
+              to="/register"
+              style={{ color: "#387ed1", textDecoration: "none" }}
+            >
+              Signup now
+            </Link>
+          </Typography>
+        </Paper>
+      </Container>
+    </ThemeProvider>
+  );
+}
