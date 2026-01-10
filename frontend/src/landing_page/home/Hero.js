@@ -2,7 +2,7 @@ import React from "react";
 
 function Hero() {
   const goToKiteLogin = () => {
-    window.location.href = "http://localhost:3000/login";
+window.location.href = "http://localhost:3001";
   };
 
   return (
