@@ -15,6 +15,7 @@ const BuyActionWindow = ({ uid }) => {
     axios
       .post(
         "https://zerodhaclone-x8xd.onrender.com/newOrder",
+
         {
           name: uid,
           qty: stockQuantity,
