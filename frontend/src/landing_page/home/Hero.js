@@ -2,7 +2,7 @@ import React from "react";
 
 function Hero() {
   const goToKiteLogin = () => {
-window.location.href = "http://localhost:3001";
+window.location.href = "https://zerodhaclone-x8xd.onrender.com/user/login";
   };
 
   return (
