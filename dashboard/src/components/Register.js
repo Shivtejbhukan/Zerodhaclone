@@ -46,7 +46,7 @@ export default function Register() {
 
     try {
       const res = await axios.post(
-        "https://zerodha-clone-backend-8nlf.onrender.com/user/register",
+        "https://zerodhaclone-x8xd.onrender.com/user/register",
         data,
         { headers: { "Content-Type": "application/json" } }
       );

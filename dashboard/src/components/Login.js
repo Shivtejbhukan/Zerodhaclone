@@ -40,7 +40,7 @@ export default function Login() {
 
     try {
       const res = await axios.post(
-        "https://zerodha-clone-backend-8nlf.onrender.com/user/login",
+        "https://zerodhaclone-x8xd.onrender.com/user/login",
         data,
         { headers: { "Content-Type": "application/json" } }
       );
