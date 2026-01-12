@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 function Signup() {
   useEffect(() => {
-window.location.href = "https://zerodhaclone-x8xd.onrender.com/user/login";
+window.location.href = "https://zerodhaclone-2-vi8g.onrender.com/user/login";
   }, []);
 
   return null;
